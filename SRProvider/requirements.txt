@@ -4,3 +4,4 @@ django-messages==0.6.0
 django-otp==1.7.0
 django-slugfield==0.9
 django-tinymce==4.1.0
+whitenoise==6.6.0
