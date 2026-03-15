@@ -1,0 +1,146 @@
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Navbar container */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      position:sticky;
+      top:0px;
+      z-index:200;
+      align-items: center;
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      padding: 0.8rem 1.5rem;
+      color: #fff;
+    }
+
+    /* Logo */
+    .navbar .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* Nav links */
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar ul li {
+      margin-left: 1.5rem;
+    }
+
+    .navbar ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    /* Hamburger menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #fff;
+      margin: 4px 0;
+      transition: 0.4s;
+    }
+
+    .navbar ul li a:hover{
+      color: skyblue;
+      font-weight: 600;
+      font-size: 1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transform:scale(1.04);
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar ul {
+        position: absolute;
+        top: 60px;
+        left: -100%;
+        flex-direction: column;
+        background: linear-gradient(135deg, #2575fc, #6a11cb);
+        opacity: 0.95;
+        width: 100%;
+        text-align: center;
+        transition: left 0.3s ease;
+      }
+
+      .navbar ul.active {
+        left: 0;
+      }
+
+      .navbar ul li {
+        margin: 1rem 0;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+    }
+    
+
+    /* Navbar title/logo */
+.logo {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;   /* little bold */
+}
+
+/* Link styling */
+.logo a {
+  text-decoration: none;
+  color: white;        /* neutral dark text */
+  transition: color 0.3s ease;
+}
+
+  </style>
+
+  <nav class="navbar">
+    <div class="logo" >
+      <a href = "{% url "home" %}">
+        <span>📚 S.R. </span>Provider
+      </a>
+    </div>
+    <ul id="nav-links">
+      <li><a {% if request.path == '/' %} style = "text-decoration:underline; font-weight:600; color:skyblue;" {% endif %} href="{% url "home" %}">Home</a></li>
+      <li><a {% if request.path == '/about-us/' %} style = "text-decoration:underline; font-weight:600; color:skyblue;" {% endif %} href="{% url "about" %}">About Us</a></li>
+      {% if not request.user.is_authenticated %}
+      <li><a {% if request.path == '/register/' %} style = "text-decoration:underline; font-weight:600; color:skyblue;" {% endif %} href="{% url "register" %}">Register</a></li>
+      <li><a {% if request.path == '/login/' %} style = "text-decoration:underline; font-weight:600; color:skyblue;" {% endif %} href="{% url "login" %}">Login</a></li>
+      {% else %}
+      <li style="color: #fff;">Welcome <a href = {% url "profile" request.user.pk %}><strong style = "text-transform: capitalize;">{{ request.user.username }}</strong>!</a></li>
+      <li><a href="{% url "logout" %}">Logout</a></li>
+      {% endif %}
+    </ul>
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
+

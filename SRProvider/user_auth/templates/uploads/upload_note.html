@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Notes{% endblock title %}
+{% load static %}
+{% block main %}
+<head>
+    <link rel="stylesheet" href="{% static 'upload.css' %}">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Card -->
+            <div class="card shadow-lg border-0 rounded">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">Upload Your Notes</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Form -->
+                    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form.title.label_tag }}
+                            {{ form.title }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.file.label_tag }}
+                            {{ form.file }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.unit.label_tag }}
+                            {{ form.unit }}
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Upload Note</button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+{% endblock main %}

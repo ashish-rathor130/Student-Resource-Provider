@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}About Us{% endblock title %}
+
+{% block main %}
+<head>
+      {% load static %}
+      <link rel="stylesheet" href="{% static 'about.css' %}">
+</head>
+
+<div class="about-us">
+
+  <!-- About Section -->
+  <section class="about-section">
+    <h1>About Us</h1>
+    <p>
+      Welcome to <strong>Our Student Resource Platform</strong> – a community built by ANVD, for students.  
+      We provide free access to notes, previous year papers, and sample resources to help you succeed.  
+      Students can also contribute by uploading their own notes and exam papers, making this a truly collaborative hub.
+    </p>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature-card">
+      <div class="feature-icon">📘</div>
+      <h5>Notes</h5>
+      <p>Organized semester-wise for easy access and quick revision.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📄</div>
+      <h5>Previous Papers</h5>
+      <p>Year-wise exam papers to help you prepare effectively.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤝</div>
+      <h5>Student Contributions</h5>
+      <p>Upload your own notes and papers to support your peers.</p>
+    </div>
+  </section>
+
+</div>
+</html>
+
+{% endblock main %}

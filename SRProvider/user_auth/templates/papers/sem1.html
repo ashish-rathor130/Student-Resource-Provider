@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Notes{% endblock title %}
+
+{% block main %}
+<head>
+  {% load static %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'notes.css' %}">
+</head>
+
+<div class = "notes-sem1">
+  <header class = "top-heading">
+    <h1>📘 Semester 1 B.Tech Smaple Papers</h1>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h3>Mathematics I</h3>
+      <p>Core concepts of calculus, algebra, and matrices.</p>
+      <ul>
+        <li>Paper1<a href ="#"><i class = "fa fa-download"></i></a></li>
+        <li>Paper1<a href ="#"><i class = "fa fa-download"></i></a></li>
+        <li>Paper1<a href ="#"><i class = "fa fa-download"></i></a></li>
+      </ul>
+      <div class="actions">
+        <button class="icon-btn like"><i class="fa-regular fa-heart"></i></button>
+        <button class="icon-btn upload"><i class="fa-solid fa-upload"></i></button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Physics I</h3>
+      <p>Mechanics, waves, and thermodynamics.</p>
+      <div class="actions">
+        <button class="icon-btn like"><i class="fa-regular fa-heart"></i></button>
+        <button class="icon-btn upload"><i class="fa-solid fa-upload"></i></button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Programming in C</h3>
+      <p>Basics of C language, loops, arrays, and functions.</p>
+      <div class="actions">
+        <button class="icon-btn like"><i class="fa-regular fa-heart"></i></button>
+        <button class="icon-btn upload"><i class="fa-solid fa-upload"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle like/unlike
+    document.querySelectorAll('.like').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const icon = btn.querySelector('i');
+        icon.classList.toggle('fa-regular');
+        icon.classList.toggle('fa-solid');
+        icon.classList.toggle('text-danger');
+      });
+    });
+  </script>
+</div>
+</html>
+{% endblock main %}

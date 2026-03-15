@@ -1,0 +1,70 @@
+.notes-sem1 {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f8f9fa, #e9ecef);
+      color: #333;
+    }
+    .top-heading {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      color: white;
+      margin:10px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 300px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #0077b6;
+    }
+    .card p {
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+    }
+    .icon-btn {
+      border: none;
+      background: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .icon-btn.like:hover {
+      color: red;
+    }
+    .icon-btn.upload:hover {
+      color: #0077b6;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .card {
+        width: 100%;
+      }
+    }
+     footer{
+      text-align:center;
+    }

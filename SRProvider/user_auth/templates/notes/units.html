@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{subject.subject_name}}{% endblock title %}
+
+{% block main %}
+<head>
+  {% load static %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'notes.css' %}">
+</head>
+
+<div class = "notes-sem1">
+  <header class = "top-heading">
+    <h1>📘 {{semester.semester}} - {{subject.subject_name}} All Units</h1>
+  </header>
+
+  <div class="container">
+    {% for unit in units %}
+    <div class="card">
+      <h3>{{subject.subject_name}}</h3>
+      <p><strong>Unit-{{unit.unit_number}}</strong></p>
+      <ul>
+        {% for note in unit.notes.all %}
+        <li><a href ="{{note.file.url}}" download target = "_blank"> {{note.title}} <i class = "fa fa-view"></i></a></li>
+        {% endfor %}
+      </ul>
+      {% if request.user.is_authenticated %}
+      <div class="actions">
+        <button class="icon-btn like"><i class="fa-regular fa-heart"></i></button>
+        <button class="icon-btn upload"><a href = "{% url "upload_note" %}"><i class="fa-solid fa-upload"></i></a></button>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    // Toggle like/unlike
+    document.querySelectorAll('.like').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const icon = btn.querySelector('i');
+        icon.classList.toggle('fa-regular');
+        icon.classList.toggle('fa-solid');
+        icon.classList.toggle('text-danger');
+      });
+    });
+  </script>
+</div>
+</html>
+{% endblock main %}

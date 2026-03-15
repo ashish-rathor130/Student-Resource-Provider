@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Login Page{% endblock title %}
+
+{% block main %}
+
+<header>
+  {% load static %}
+  <link rel= "stylesheet" href = "{% static "auth.css" %}">
+</header>
+
+
+<div class="register-page">
+  <div class="register-container">
+    <h2>Login to Your Account</h2>
+    <form method="POST" action="{% url 'login' %}" class="register-form">
+        {% csrf_token %}
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" name="password" required>
+      </div>
+
+      
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <p class="footer-text">Don't have an account? <a href="{% url 'register' %}">Signup</a></p>
+    <!-- Forgot Password Link -->
+    <p class="forgot-password">
+      <a href="{% url 'reset_password' %}">Forgot Password? </a>
+    </p>
+  </div>
+</div>
+
+
+
+{% endblock main %}

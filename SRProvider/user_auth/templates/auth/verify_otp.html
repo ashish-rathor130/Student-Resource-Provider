@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block title %}
+Email OTP Verification
+{% endblock title %}
+
+
+{% block main %}
+  <style>
+    .verify-otp-page {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      {% comment %} background: linear-gradient(135deg, #ff6a00, #ee0979); {% endcomment %}
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .otp-container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .otp-container h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .otp-inputs {
+      display: flex;
+      justify-content: space-between;
+      margin: 1.5rem 0;
+    }
+
+    .otp-inputs input {
+      width: 3rem;
+      height: 3rem;
+      text-align: center;
+      font-size: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .otp-inputs input:focus {
+      border-color: #ee0979;
+      outline: none;
+      box-shadow: 0 0 5px rgba(238,9,121,0.5);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: #ee0979;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #ff6a00;
+    }
+
+    .footer-text {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    @media (max-width: 480px) {
+      .otp-inputs {
+        gap: 0.5rem;
+      }
+      .otp-inputs input {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.2rem;
+      }
+    }
+
+    .countdown {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .countdown.expired {
+      color: red;
+    }
+    .otp-inputs input {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      font-size: 18px;
+      margin: 5px;
+    }
+    .btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+
+<div class="verify-otp-page">
+  <div class="otp-container">
+    <h2>Verify Your Email</h2>
+    <p>Please enter the 6-digit OTP sent to your email.</p>
+    <!-- Countdown timer -->
+    <div id="countdown" class="countdown">OTP valid for 05:00</div>
+    
+    <form method="POST">
+      {% csrf_token %}
+      <div class="otp-inputs">
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+        <input type="text" maxlength="1" required>
+      </div>
+      <input type="hidden" name="otp" id="otpField">
+      <button type="" class="btn" id="verify-btn">Verify</button>
+    </form>
+    <p class="footer-text">
+      Didn't receive the code? 
+      <a href="{% url 'resend_otp' user_id %}">Resend OTP</a>
+    </p>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll('.otp-inputs input');
+    const otpField = document.getElementById('otpField');
+    const form = document.querySelector('form');
+    const verifyBtn = document.getElementById('verify-btn');
+    const countdownEl = document.getElementById('countdown');
+
+    // Auto-focus next input and handle backspace
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', () => {
+        if (input.value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === "Backspace" && !input.value && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+    });
+
+    // Combine OTP before form submission
+    verifyBtn.addEventListener('click', (event) => {
+      let otp = '';
+      inputs.forEach(input => otp += input.value);
+      otpField.value = otp;
+      console.log("Entered OTP:", otp);
+    });
+
+    // Countdown timer (5 minutes = 300 seconds)
+    let timeLeft = 300;
+    const timer = setInterval(() => {
+      let minutes = Math.floor(timeLeft / 60);
+      let seconds = timeLeft % 60;
+      countdownEl.textContent = `OTP valid for ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        countdownEl.textContent = "OTP expired!";
+        countdownEl.classList.add("expired");
+        verifyBtn.disabled = true; // disable button when expired
+      }
+      timeLeft--;
+    }, 1000);
+  </script>
+</div>
+
+
+{% endblock main %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Home Page{% endblock title %}
+{% load static %}
+{% block main %}
+  <head>
+      <link rel="stylesheet" href="{% static 'upload_btn.css' %}">
+  </head>
+
+<div class = "home-page">
+  <header>Student Resource Provider</header>
+<div class="container">
+  <!-- B.Tech Section -->
+  {% for course in courses %}
+  <div class="course-section" id = "{{course.course_name}}">
+    <h2 class="course-title">{{course.course_name}}</h2>
+    <div class="semester-grid">
+      {% for sem in course.semesters.all  %}
+      <div class="semester-card">
+        <h3 class="semester-title">{{sem.semester}}</h3>
+        <div class="links">
+          <a href="{% url "notes" sem.semester_id %}">Notes</a>
+          <a href="{% url "papers" %}">Previous Papers</a>
+        </div>
+        {% if courses %}
+        {% if request.user.is_authenticated %}
+        <div class = "actions">
+              <button class="icon-btn upload"><a href = "{% url "upload_subject" sem.semester_id %}">Subject<i class="fa-solid fa-upload"></i></a></button>
+        </div>
+        {% endif %}
+        {% endif %}
+      </div>
+      {% endfor %}
+      <!-- Add more semesters as needed -->
+    </div>
+    {% if request.user.is_superuser %}
+      <div class="actions">
+        <button class="icon-btn upload"><a href = "{% url "upload_semester" %}">Semester<i class="fa-solid fa-upload"></i></a></button>
+        <button class="icon-btn upload"><a href = "{% url "upload_semester" %}">Semester<i class="fa-solid fa-upload"></i></a></button>
+      </div>
+    {%endif%}
+  </div>
+  {% endfor %}
+
+  {% if request.user.is_superuser %}
+  <div class="actions">
+        <button class="icon-btn like"><i class="fa-regular fa-heart"></i></button>
+        <button class="icon-btn upload"><a href = "{% url "upload_course" %}">Course<i class="fa-solid fa-upload"></i></a></button>
+        {% comment %} <button class="icon-btn upload"><a href = "{% url "upload_subject" %}">Subject<i class="fa-solid fa-upload"></i></a></button>
+        <button class="icon-btn upload"><a href = "{% url "upload_unit" %}">Unit<i class="fa-solid fa-upload"></i></a></button> {% endcomment %}
+        <button class="icon-btn upload"><a href = "{% url "upload_note" %}">Note<i class="fa-solid fa-upload"></i></a></button>
+  </div>
+  {% endif %}
+
+</div>
+
+
+</div>
+</html>
+{% endblock main %}

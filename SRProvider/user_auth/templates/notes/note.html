@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Notes{% endblock title %}
+
+{% block main %}
+<head>
+  {% load static %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'notes.css' %}">
+</head>
+<div class = "notes-sem1">
+  <header class = "top-heading">
+    <h1>📘 {{semester}} Notes</h1>
+  </header>
+
+  <div class="container">
+    {% for sub in subjects  %}
+    <div class="card">
+      <h3>{{sub.subject_name}}</h3>
+      <p>{{sub.content}}</p>
+      <h4><a href ="{% url "units" sub.subject_id %}" target = '_blank'>Get All Units of {{sub.subject_name}}</a></h4>
+      <div class="actions">
+        <button class="icon-btn like"><i class="fa-regular fa-heart"></i></button>
+        {% if request.user.is_authenticated %}
+        <button class="icon-btn upload"><a href = "{% url "upload_unit" sub.subject_id %}" ><i class="fa-solid fa-upload"></i></a></button>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    // Toggle like/unlike
+    document.querySelectorAll('.like').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const icon = btn.querySelector('i');
+        icon.classList.toggle('fa-regular');
+        icon.classList.toggle('fa-solid');
+        icon.classList.toggle('text-danger');
+      });
+    });
+  </script>
+</div>
+</html>
+{% endblock main %}

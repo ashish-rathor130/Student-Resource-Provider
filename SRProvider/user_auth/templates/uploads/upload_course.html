@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Course{% endblock title %}
+
+{% load static %}
+
+{% block main %}
+<head>
+    <link rel="stylesheet" href="{% static 'upload.css' %}">
+</head>
+<div class="bg-light">
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- Card -->
+            <div class="card shadow-lg border-0 rounded">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">Upload Course</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Form -->
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form.course_name.label_tag }}
+                            {{ form.course_name }}
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Upload Course</button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+{% endblock main %}
